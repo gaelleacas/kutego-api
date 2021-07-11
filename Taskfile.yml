@@ -9,23 +9,38 @@ tasks:
     desc: Run http server directly (without build)
     cmds:
     - go run internal/main.go
+
   swagger:validate:
-    desc: Run swagger
+    desc: Validate Swagger spec
     cmds:
     - cmd: |
-        docker run -it --rm \
-        --user $(id -u):$(id -g) \
-        -e GOPATH=$(go env GOPATH):/go \
-        -v $HOME:$HOME \
-        -w $(pwd) quay.io/goswagger/swagger validate ./pkg/swagger/swagger.yml
+        swagger validate ./pkg/swagger/swagger.yml
+  
   swagger:serve:
-    desc: Run swagger
+    desc: Serve swagger UI
     cmds:
     - cmd: |
-        docker run --rm \
-        --user $(id -u):$(id -g) \
-        -e GOPATH=$(go env GOPATH):/go \
-        -v $HOME:$HOME \
-        -w $(pwd) quay.io/goswagger/swagger serve ./pkg/swagger/swagger.yml --no-open
+        swagger serve ./pkg/swagger/swagger.yml
+  
+  # docker:swagger:validate:
+  #   desc: Validate Swagger spec
+  #   cmds:
+  #   - cmd: |
+  #       docker run -it --rm \
+  #       --user $(id -u):$(id -g) \
+  #       -e GOPATH=$(go env GOPATH):/go \
+  #       -v $HOME:$HOME \
+  #       -w $(pwd) quay.io/goswagger/swagger validate ./pkg/swagger/swagger.yml
+  ## Doesn't work for now because I don't find how to serve on MacOS host from docker desktop
+  ## `host.docker.internal` fail :'(
+  # docker:swagger:serve:
+  #   desc: Run swagger
+  #   cmds:
+  #   - cmd: |
+  #       docker run --rm \
+  #       --user $(id -u):$(id -g) \
+  #       -e GOPATH=$(go env GOPATH):/go \
+  #       -v $HOME:$HOME \
+  #       -w $(pwd) quay.io/goswagger/swagger serve ./pkg/swagger/swagger.yml --no-open
 
 
