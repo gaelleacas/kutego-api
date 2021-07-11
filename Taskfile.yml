@@ -1,0 +1,31 @@
+version: "3"
+
+tasks:
+  build:
+    desc: Build Go binary
+    cmds:
+    - go build -o bin/kutego-api internal/main.go
+  run: 
+    desc: Run http server directly (without build)
+    cmds:
+    - go run internal/main.go
+  swagger:validate:
+    desc: Run swagger
+    cmds:
+    - cmd: |
+        docker run -it --rm \
+        --user $(id -u):$(id -g) \
+        -e GOPATH=$(go env GOPATH):/go \
+        -v $HOME:$HOME \
+        -w $(pwd) quay.io/goswagger/swagger validate ./pkg/swagger/swagger.yml
+  swagger:serve:
+    desc: Run swagger
+    cmds:
+    - cmd: |
+        docker run --rm \
+        --user $(id -u):$(id -g) \
+        -e GOPATH=$(go env GOPATH):/go \
+        -v $HOME:$HOME \
+        -w $(pwd) quay.io/goswagger/swagger serve ./pkg/swagger/swagger.yml --no-open
+
+
