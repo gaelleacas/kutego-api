@@ -30,7 +30,7 @@ func init() {
   "swagger": "2.0",
   "info": {
     "description": "HTTP server in Go with Swagger endpoints definition",
-    "title": "kutego-api",
+    "title": "http-go-server",
     "version": "0.1.0"
   },
   "paths": {
@@ -42,7 +42,13 @@ func init() {
         "operationId": "checkHealth",
         "responses": {
           "200": {
-            "description": "OK message"
+            "description": "OK message",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "OK"
+              ]
+            }
           }
         }
       }
@@ -61,7 +67,10 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Returns the greeting."
+            "description": "Returns the greeting.",
+            "schema": {
+              "type": "string"
+            }
           },
           "400": {
             "description": "Invalid characters in \"user\" were provided."
@@ -84,7 +93,7 @@ func init() {
   "swagger": "2.0",
   "info": {
     "description": "HTTP server in Go with Swagger endpoints definition",
-    "title": "kutego-api",
+    "title": "http-go-server",
     "version": "0.1.0"
   },
   "paths": {
@@ -96,7 +105,13 @@ func init() {
         "operationId": "checkHealth",
         "responses": {
           "200": {
-            "description": "OK message"
+            "description": "OK message",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "OK"
+              ]
+            }
           }
         }
       }
@@ -115,7 +130,10 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Returns the greeting."
+            "description": "Returns the greeting.",
+            "schema": {
+              "type": "string"
+            }
           },
           "400": {
             "description": "Invalid characters in \"user\" were provided."

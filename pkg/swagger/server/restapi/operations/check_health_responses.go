@@ -19,6 +19,11 @@ const CheckHealthOKCode int = 200
 swagger:response checkHealthOK
 */
 type CheckHealthOK struct {
+
+	/*
+	  In: Body
+	*/
+	Payload string `json:"body,omitempty"`
 }
 
 // NewCheckHealthOK creates CheckHealthOK with default headers values
@@ -27,10 +32,23 @@ func NewCheckHealthOK() *CheckHealthOK {
 	return &CheckHealthOK{}
 }
 
+// WithPayload adds the payload to the check health o k response
+func (o *CheckHealthOK) WithPayload(payload string) *CheckHealthOK {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the check health o k response
+func (o *CheckHealthOK) SetPayload(payload string) {
+	o.Payload = payload
+}
+
 // WriteResponse to the client
 func (o *CheckHealthOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
-	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
-
 	rw.WriteHeader(200)
+	payload := o.Payload
+	if err := producer.Produce(rw, payload); err != nil {
+		panic(err) // let the recovery middleware deal with this
+	}
 }

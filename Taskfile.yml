@@ -26,7 +26,7 @@ tasks:
     desc: Create swagger in Go
     cmds:
     -cmd: |
-      OFLAGS=-mod=vendor go generate github.com/gaelleacas/kutego-api/internal github.com/gaelleacas/kutego-api/pkg/swagger
+        GOFLAGS=-mod=mod go generate github.com/gaelleacas/kutego-api/internal github.com/gaelleacas/kutego-api/pkg/swagger
   
   
   # docker:swagger:validate:
