@@ -25,8 +25,8 @@ tasks:
   swagger:gen:
     desc: Generate Go code
     cmds:
-    -cmd: |
-        GOFLAGS=-mod=mod go generate github.com/gaelleacas/kutego-api/internal github.com/gaelleacas/kutego-api/pkg/swagger
+    - cmd: |
+        GOFLAGS=-mod=vendor go generate github.com/gaelleacas/kutego-api/internal github.com/gaelleacas/kutego-api/pkg/swagger
 
   swagger:doc:
       desc: Doc for swagger
