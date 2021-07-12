@@ -44,8 +44,8 @@ func NewHelloAPIAPI(spec *loads.Document) *HelloAPIAPI {
 		JSONProducer: runtime.JSONProducer(),
 		TxtProducer:  runtime.TextProducer(),
 
-		GetGophersNameHandler: GetGophersNameHandlerFunc(func(params GetGophersNameParams) middleware.Responder {
-			return middleware.NotImplemented("operation GetGophersName has not yet been implemented")
+		GetGopherNameHandler: GetGopherNameHandlerFunc(func(params GetGopherNameParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetGopherName has not yet been implemented")
 		}),
 		GetHelloUserHandler: GetHelloUserHandlerFunc(func(params GetHelloUserParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetHelloUser has not yet been implemented")
@@ -95,8 +95,8 @@ type HelloAPIAPI struct {
 	//   - text/plain
 	TxtProducer runtime.Producer
 
-	// GetGophersNameHandler sets the operation handler for the get gophers name operation
-	GetGophersNameHandler GetGophersNameHandler
+	// GetGopherNameHandler sets the operation handler for the get gopher name operation
+	GetGopherNameHandler GetGopherNameHandler
 	// GetHelloUserHandler sets the operation handler for the get hello user operation
 	GetHelloUserHandler GetHelloUserHandler
 	// CheckHealthHandler sets the operation handler for the check health operation
@@ -184,8 +184,8 @@ func (o *HelloAPIAPI) Validate() error {
 		unregistered = append(unregistered, "TxtProducer")
 	}
 
-	if o.GetGophersNameHandler == nil {
-		unregistered = append(unregistered, "GetGophersNameHandler")
+	if o.GetGopherNameHandler == nil {
+		unregistered = append(unregistered, "GetGopherNameHandler")
 	}
 	if o.GetHelloUserHandler == nil {
 		unregistered = append(unregistered, "GetHelloUserHandler")
@@ -288,7 +288,7 @@ func (o *HelloAPIAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/gophers/{name}"] = NewGetGophersName(o.context, o.GetGophersNameHandler)
+	o.handlers["GET"]["/gopher/{name}"] = NewGetGopherName(o.context, o.GetGopherNameHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

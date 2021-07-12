@@ -34,7 +34,7 @@ func init() {
     "version": "0.1.0"
   },
   "paths": {
-    "/gophers/{name}": {
+    "/gopher/{name}": {
       "get": {
         "description": "Return the Gopher Image",
         "produces": [
@@ -125,7 +125,7 @@ func init() {
     "version": "0.1.0"
   },
   "paths": {
-    "/gophers/{name}": {
+    "/gopher/{name}": {
       "get": {
         "description": "Return the Gopher Image",
         "produces": [

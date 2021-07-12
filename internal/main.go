@@ -34,7 +34,7 @@ func main() {
 
 	api.GetHelloUserHandler = operations.GetHelloUserHandlerFunc(GetHelloUser)
 
-	api.GetGophersNameHandler = operations.GetGophersNameHandlerFunc(GetGophersName)
+	api.GetGopherNameHandler = operations.GetGopherNameHandlerFunc(GetGopherName)
 
 	// Start server which listening
 	if err := server.Serve(); err != nil {
@@ -54,38 +54,14 @@ func GetHelloUser(user operations.GetHelloUserParams) middleware.Responder {
 }
 
 //GetHelloUser returns Hello + your name
-func GetGophersName(name operations.GetGophersNameParams) middleware.Responder {
+func GetGopherName(name operations.GetGopherNameParams) middleware.Responder {
 
 	response, err := http.Get("https://github.com/scraly/gophers/raw/main/dr-who.png")
 	if err != nil {
 		fmt.Println("error")
 	}
 
-	// buffer := make([]byte, response.ContentLength)
-	// response.Body.Read(buffer)
-	// buffer := make([]byte, response.ContentLength)
-	// io.ReadFull(response.Body, buffer)
-	// check := func(err error) {
-	// 	if err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// }
-
-	// check(err)
-	// body, err := ioutil.ReadAll(response.Body)
-	// check(err)
-
-	// log.Printf("received: %d %s\n", response.StatusCode, body)
-
-	// middleware.ResponderFunc(func(rw http.ResponseWriter, pr runtime.Producer) {
-	// 	rw.Header().Add("Content-Length", fmt.Sprint(response.ContentLength))
-	// 	rw.Header().Add("Content-Type", response.Header.Get("Content-Type"))
-
-	// 	rw.WriteHeader(200)
-	// 	rw.Write(buffer)
-	// })
-	return operations.NewGetGophersNameOK().WithPayload(response.Body)
-
+	return operations.NewGetGopherNameOK().WithPayload(response.Body)
 }
 
 // //GetGopherByName returns a gopher in png
