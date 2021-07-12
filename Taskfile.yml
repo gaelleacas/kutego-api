@@ -20,14 +20,19 @@ tasks:
     desc: Serve swagger UI
     cmds:
     - cmd: |
-        swagger serve ./pkg/swagger/swagger.yml
+        swagger serve -F swagger ./pkg/swagger/swagger.yml
 
-  swagger:go:create:
-    desc: Create swagger in Go
+  swagger:gen:
+    desc: Generate Go code
     cmds:
     -cmd: |
         GOFLAGS=-mod=mod go generate github.com/gaelleacas/kutego-api/internal github.com/gaelleacas/kutego-api/pkg/swagger
-  
+
+  swagger:doc:
+      desc: Doc for swagger
+      cmds:
+      - docker run -i yousan/swagger-yaml-to-html < pkg/swagger/swagger.yml > doc/index.html
+
   
   # docker:swagger:validate:
   #   desc: Validate Swagger spec

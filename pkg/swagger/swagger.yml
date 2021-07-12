@@ -40,3 +40,21 @@ paths:
               type: string
           400:
             description: Invalid characters in "user" were provided.
+
+  /gophers/{name}:
+      get:
+        description: Return the Gopher Image
+        parameters:
+          - name: name
+            in: path
+            type: string
+            required: true
+            description: The name of the Gopher to display.
+        responses:
+          200:
+            description: Returns the gopher.
+            schema:
+              type: string
+              format: binary
+          400:
+            description: Invalid characters in "name" were provided.

@@ -34,6 +34,32 @@ func init() {
     "version": "0.1.0"
   },
   "paths": {
+    "/gophers/{name}": {
+      "get": {
+        "description": "Return the Gopher Image",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "The name of the Gopher to display.",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the gopher.",
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          },
+          "400": {
+            "description": "Invalid characters in \"name\" were provided."
+          }
+        }
+      }
+    },
     "/healthz": {
       "get": {
         "produces": [
@@ -97,6 +123,32 @@ func init() {
     "version": "0.1.0"
   },
   "paths": {
+    "/gophers/{name}": {
+      "get": {
+        "description": "Return the Gopher Image",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "The name of the Gopher to display.",
+            "name": "name",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the gopher.",
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          },
+          "400": {
+            "description": "Invalid characters in \"name\" were provided."
+          }
+        }
+      }
+    },
     "/healthz": {
       "get": {
         "produces": [
