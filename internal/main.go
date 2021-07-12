@@ -87,3 +87,22 @@ func GetGophersName(name operations.GetGophersNameParams) middleware.Responder {
 	return operations.NewGetGophersNameOK().WithPayload(response.Body)
 
 }
+
+// //GetGopherByName returns a gopher in png
+// func GetGopherByName(gopher operations.GetGopherNameParams) middleware.Responder {
+
+// 	var URL string
+// 	if gopher.Name != "" {
+// 		URL = "https://github.com/scraly/gophers/raw/main/" + gopher.Name + ".png"
+// 	} else {
+// 		//by default we return dr who gopher
+// 		URL = "https://github.com/scraly/gophers/raw/main/dr-who.png"
+// 	}
+
+// 	response, err := http.Get(URL)
+// 	if err != nil {
+// 		fmt.Println("error")
+// 	}
+
+// 	return operations.NewGetGopherNameOK().WithPayload(response.Body)
+// }

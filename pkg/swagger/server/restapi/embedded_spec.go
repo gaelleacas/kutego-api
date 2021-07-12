@@ -37,6 +37,9 @@ func init() {
     "/gophers/{name}": {
       "get": {
         "description": "Return the Gopher Image",
+        "produces": [
+          "image/png"
+        ],
         "parameters": [
           {
             "type": "string",
@@ -50,8 +53,7 @@ func init() {
           "200": {
             "description": "Returns the gopher.",
             "schema": {
-              "type": "string",
-              "format": "binary"
+              "type": "file"
             }
           },
           "400": {
@@ -126,6 +128,9 @@ func init() {
     "/gophers/{name}": {
       "get": {
         "description": "Return the Gopher Image",
+        "produces": [
+          "image/png"
+        ],
         "parameters": [
           {
             "type": "string",
@@ -139,8 +144,7 @@ func init() {
           "200": {
             "description": "Returns the gopher.",
             "schema": {
-              "type": "string",
-              "format": "binary"
+              "type": "file"
             }
           },
           "400": {

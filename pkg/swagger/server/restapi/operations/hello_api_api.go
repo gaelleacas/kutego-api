@@ -40,6 +40,7 @@ func NewHelloAPIAPI(spec *loads.Document) *HelloAPIAPI {
 
 		JSONConsumer: runtime.JSONConsumer(),
 
+		BinProducer:  runtime.ByteStreamProducer(),
 		JSONProducer: runtime.JSONProducer(),
 		TxtProducer:  runtime.TextProducer(),
 
@@ -84,6 +85,9 @@ type HelloAPIAPI struct {
 	//   - application/json
 	JSONConsumer runtime.Consumer
 
+	// BinProducer registers a producer for the following mime types:
+	//   - image/png
+	BinProducer runtime.Producer
 	// JSONProducer registers a producer for the following mime types:
 	//   - application/json
 	JSONProducer runtime.Producer
@@ -170,6 +174,9 @@ func (o *HelloAPIAPI) Validate() error {
 		unregistered = append(unregistered, "JSONConsumer")
 	}
 
+	if o.BinProducer == nil {
+		unregistered = append(unregistered, "BinProducer")
+	}
 	if o.JSONProducer == nil {
 		unregistered = append(unregistered, "JSONProducer")
 	}
@@ -232,6 +239,8 @@ func (o *HelloAPIAPI) ProducersFor(mediaTypes []string) map[string]runtime.Produ
 	result := make(map[string]runtime.Producer, len(mediaTypes))
 	for _, mt := range mediaTypes {
 		switch mt {
+		case "image/png":
+			result["image/png"] = o.BinProducer
 		case "application/json":
 			result["application/json"] = o.JSONProducer
 		case "text/plain":

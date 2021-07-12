@@ -41,7 +41,7 @@ paths:
           400:
             description: Invalid characters in "user" were provided.
 
-  /gopher/{name}:
+  /gophers/{name}:
     get:
       description: Return the Gopher Image
       produces:
@@ -57,7 +57,5 @@ paths:
           description: Returns the gopher.
           schema:
             type: file
-          400:
-            description: Invalid characters in "name" were provided.
-
-      
+        400:
+          description: Invalid characters in "name" were provided.

@@ -4,11 +4,11 @@ tasks:
   build:
     desc: Build Go binary
     cmds:
-    - go build -o bin/kutego-api internal/main.go
+    - GOFLAGS=-mod=mod go build -o bin/kutego-api internal/main.go
   run: 
     desc: Run http server directly (without build)
     cmds:
-    - go run internal/main.go
+    - GOFLAGS=-mod=mod go run internal/main.go
 
   swagger:validate:
     desc: Validate Swagger spec
@@ -26,12 +26,17 @@ tasks:
     desc: Generate Go code
     cmds:
     - cmd: |
-        GOFLAGS=-mod=vendor go generate github.com/gaelleacas/kutego-api/internal github.com/gaelleacas/kutego-api/pkg/swagger
+        GOFLAGS=-mod=mod go generate github.com/gaelleacas/kutego-api/internal github.com/gaelleacas/kutego-api/pkg/swagger
 
   swagger:doc:
       desc: Doc for swagger
       cmds:
       - docker run -i yousan/swagger-yaml-to-html < pkg/swagger/swagger.yml > doc/index.html
+
+  swagger.gen:
+      desc: generate Go code
+      cmds:
+      - GOFLAGS=-mod=mod go generate pkg/swagger/
 
   
   # docker:swagger:validate:

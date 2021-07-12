@@ -35,6 +35,7 @@ func configureAPI(api *operations.HelloAPIAPI) http.Handler {
 
 	api.JSONConsumer = runtime.JSONConsumer()
 
+	api.BinProducer = runtime.ByteStreamProducer()
 	api.JSONProducer = runtime.JSONProducer()
 	api.TxtProducer = runtime.TextProducer()
 
