@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"log"
 	"net/http"
 
@@ -57,21 +56,34 @@ func GetHelloUser(user operations.GetHelloUserParams) middleware.Responder {
 //GetHelloUser returns Hello + your name
 func GetGophersName(name operations.GetGophersNameParams) middleware.Responder {
 
-	reqImg, err := http.Get("https://github.com/scraly/gophers/raw/main/dr-who.png")
-	// if err != nil {
-	// 	fmt.Println("error")
+	response, err := http.Get("https://github.com/scraly/gophers/raw/main/dr-who.png")
+	if err != nil {
+		fmt.Println("error")
+	}
+
+	// buffer := make([]byte, response.ContentLength)
+	// response.Body.Read(buffer)
+	// buffer := make([]byte, response.ContentLength)
+	// io.ReadFull(response.Body, buffer)
+	// check := func(err error) {
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
 	// }
 
-	if err != nil {
-		fmt.Fprintf(res, "Error %d", err)
-		return
-	}
-	buffer := make([]byte, reqImg.ContentLength)
-	io.ReadFull(reqImg.Body, buffer)
-	// res.Header().Set("Content-Length", fmt.Sprint(reqImg.ContentLength))
-	// res.Header().Set("Content-Type", reqImg.Header.Get("Content-Type"))
-	// res.Write(buffer)
-	// req.Body.Close()
+	// check(err)
+	// body, err := ioutil.ReadAll(response.Body)
+	// check(err)
 
-	return operations.NewGetGophersNameOK().WithPayload(buffer)
+	// log.Printf("received: %d %s\n", response.StatusCode, body)
+
+	// middleware.ResponderFunc(func(rw http.ResponseWriter, pr runtime.Producer) {
+	// 	rw.Header().Add("Content-Length", fmt.Sprint(response.ContentLength))
+	// 	rw.Header().Add("Content-Type", response.Header.Get("Content-Type"))
+
+	// 	rw.WriteHeader(200)
+	// 	rw.Write(buffer)
+	// })
+	return operations.NewGetGophersNameOK().WithPayload(response.Body)
+
 }

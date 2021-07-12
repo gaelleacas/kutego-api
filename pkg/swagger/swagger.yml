@@ -44,6 +44,8 @@ paths:
   /gophers/{name}:
       get:
         description: Return the Gopher Image
+        produces:
+        - image/png
         parameters:
           - name: name
             in: path
@@ -54,7 +56,8 @@ paths:
           200:
             description: Returns the gopher.
             schema:
-              type: string
-              format: binary
+              type: file
           400:
             description: Invalid characters in "name" were provided.
+
+      
