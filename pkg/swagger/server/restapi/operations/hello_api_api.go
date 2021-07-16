@@ -47,6 +47,9 @@ func NewHelloAPIAPI(spec *loads.Document) *HelloAPIAPI {
 		GetGopherNameHandler: GetGopherNameHandlerFunc(func(params GetGopherNameParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetGopherName has not yet been implemented")
 		}),
+		GetGophersHandler: GetGophersHandlerFunc(func(params GetGophersParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetGophers has not yet been implemented")
+		}),
 		GetHelloUserHandler: GetHelloUserHandlerFunc(func(params GetHelloUserParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetHelloUser has not yet been implemented")
 		}),
@@ -97,6 +100,8 @@ type HelloAPIAPI struct {
 
 	// GetGopherNameHandler sets the operation handler for the get gopher name operation
 	GetGopherNameHandler GetGopherNameHandler
+	// GetGophersHandler sets the operation handler for the get gophers operation
+	GetGophersHandler GetGophersHandler
 	// GetHelloUserHandler sets the operation handler for the get hello user operation
 	GetHelloUserHandler GetHelloUserHandler
 	// CheckHealthHandler sets the operation handler for the check health operation
@@ -186,6 +191,9 @@ func (o *HelloAPIAPI) Validate() error {
 
 	if o.GetGopherNameHandler == nil {
 		unregistered = append(unregistered, "GetGopherNameHandler")
+	}
+	if o.GetGophersHandler == nil {
+		unregistered = append(unregistered, "GetGophersHandler")
 	}
 	if o.GetHelloUserHandler == nil {
 		unregistered = append(unregistered, "GetHelloUserHandler")
@@ -289,6 +297,10 @@ func (o *HelloAPIAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/gopher/{name}"] = NewGetGopherName(o.context, o.GetGopherNameHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/gophers"] = NewGetGophers(o.context, o.GetGophersHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

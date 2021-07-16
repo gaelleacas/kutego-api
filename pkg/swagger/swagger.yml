@@ -40,8 +40,20 @@ paths:
               type: string
           400:
             description: Invalid characters in "user" were provided.
+  /gophers:
+    get:
+      description: List all the gopher
+      produces:
+       - application/json
+      responses:
+        200:
+          description: Return the Gophers list.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Gopher'
 
-  /gophers/{name}:
+  /gopher/{name}:
     get:
       description: Return the Gopher Image
       produces:
@@ -59,3 +71,15 @@ paths:
             type: file
         400:
           description: Invalid characters in "name" were provided.
+
+definitions:
+  Gopher:
+    type: object
+    properties:
+      name:
+        type: string
+        example: my-gopher
+      path:
+        type: string
+      url:
+        type: string

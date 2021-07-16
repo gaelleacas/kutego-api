@@ -62,6 +62,25 @@ func init() {
         }
       }
     },
+    "/gophers": {
+      "get": {
+        "description": "List all the gopher",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the Gophers list.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Gopher"
+              }
+            }
+          }
+        }
+      }
+    },
     "/healthz": {
       "get": {
         "produces": [
@@ -103,6 +122,23 @@ func init() {
           "400": {
             "description": "Invalid characters in \"user\" were provided."
           }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Gopher": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "my-gopher"
+        },
+        "path": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
         }
       }
     }
@@ -153,6 +189,25 @@ func init() {
         }
       }
     },
+    "/gophers": {
+      "get": {
+        "description": "List all the gopher",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the Gophers list.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Gopher"
+              }
+            }
+          }
+        }
+      }
+    },
     "/healthz": {
       "get": {
         "produces": [
@@ -194,6 +249,23 @@ func init() {
           "400": {
             "description": "Invalid characters in \"user\" were provided."
           }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Gopher": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "my-gopher"
+        },
+        "path": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
         }
       }
     }

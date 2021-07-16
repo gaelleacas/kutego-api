@@ -1,14 +1,18 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
+	"github.com/gaelleacas/kutego-api/pkg/swagger/server/models"
 	"github.com/gaelleacas/kutego-api/pkg/swagger/server/restapi"
 	"github.com/gaelleacas/kutego-api/pkg/swagger/server/restapi/operations"
 	"github.com/go-openapi/loads"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/google/go-github/v37/github"
 )
 
 func main() {
@@ -36,6 +40,8 @@ func main() {
 
 	api.GetGopherNameHandler = operations.GetGopherNameHandlerFunc(GetGopherName)
 
+	api.GetGophersHandler = operations.GetGophersHandlerFunc(GetGophers)
+
 	// Start server which listening
 	if err := server.Serve(); err != nil {
 		log.Fatalln(err)
@@ -54,9 +60,17 @@ func GetHelloUser(user operations.GetHelloUserParams) middleware.Responder {
 }
 
 //GetHelloUser returns Hello + your name
-func GetGopherName(name operations.GetGopherNameParams) middleware.Responder {
+func GetGopherName(gopher operations.GetGopherNameParams) middleware.Responder {
 
-	response, err := http.Get("https://github.com/scraly/gophers/raw/main/dr-who.png")
+	var URL string
+	if gopher.Name != "" {
+		URL = "https://github.com/scraly/gophers/raw/main/" + gopher.Name + ".png"
+	} else {
+		//by default we return dr who gopher
+		URL = "https://github.com/scraly/gophers/raw/main/gandalf.png"
+	}
+
+	response, err := http.Get(URL)
 	if err != nil {
 		fmt.Println("error")
 	}
@@ -64,21 +78,31 @@ func GetGopherName(name operations.GetGopherNameParams) middleware.Responder {
 	return operations.NewGetGopherNameOK().WithPayload(response.Body)
 }
 
-// //GetGopherByName returns a gopher in png
-// func GetGopherByName(gopher operations.GetGopherNameParams) middleware.Responder {
+func GetGophers(operations.GetGophersParams) middleware.Responder {
 
-// 	var URL string
-// 	if gopher.Name != "" {
-// 		URL = "https://github.com/scraly/gophers/raw/main/" + gopher.Name + ".png"
-// 	} else {
-// 		//by default we return dr who gopher
-// 		URL = "https://github.com/scraly/gophers/raw/main/dr-who.png"
-// 	}
+	client := github.NewClient(nil)
+	// list public repositories for org "github"
+	ctx := context.Background()
+	// list all repositories for the authenticated user
+	_, directoryContent, _, err := client.Repositories.GetContents(ctx, "scraly", "gophers", "/", nil)
+	if err != nil {
+		fmt.Println(err)
+	}
+	var arr []*models.Gopher
 
-// 	response, err := http.Get(URL)
-// 	if err != nil {
-// 		fmt.Println("error")
-// 	}
+	for _, c := range directoryContent {
+		if *c.Name == ".gitignore" || *c.Name == "README.md" {
+			continue
+		}
 
-// 	return operations.NewGetGopherNameOK().WithPayload(response.Body)
-// }
+		var name string = strings.Split(*c.Name, ".")[0]
+
+		arr = append(arr, &models.Gopher{name, *c.Path, *c.DownloadURL})
+
+		fmt.Println(c)
+
+		//fmt.Println(arr)
+	}
+
+	return operations.NewGetGophersOK().WithPayload(arr)
+}

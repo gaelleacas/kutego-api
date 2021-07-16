@@ -44,6 +44,11 @@ func configureAPI(api *operations.HelloAPIAPI) http.Handler {
 			return middleware.NotImplemented("operation operations.GetGopherName has not yet been implemented")
 		})
 	}
+	if api.GetGophersHandler == nil {
+		api.GetGophersHandler = operations.GetGophersHandlerFunc(func(params operations.GetGophersParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.GetGophers has not yet been implemented")
+		})
+	}
 	if api.GetHelloUserHandler == nil {
 		api.GetHelloUserHandler = operations.GetHelloUserHandlerFunc(func(params operations.GetHelloUserParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.GetHelloUser has not yet been implemented")
