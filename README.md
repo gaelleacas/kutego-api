@@ -10,7 +10,7 @@ For now the API provide the Gophers list and a route to diplay one Gopher of you
 
 ### prerequisites
 Install Go in 1.16 version minimum.  
-Install [Taskfile](https://taskfile.dev/#/installation)
+Install [Taskfile](https://taskfile.dev/#/installation) (optional)
 
 ### Build 
 
