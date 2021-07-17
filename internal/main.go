@@ -36,8 +36,6 @@ func main() {
 
 	api.CheckHealthHandler = operations.CheckHealthHandlerFunc(Health)
 
-	api.GetHelloUserHandler = operations.GetHelloUserHandlerFunc(GetHelloUser)
-
 	api.GetGopherNameHandler = operations.GetGopherNameHandlerFunc(GetGopherName)
 
 	api.GetGophersHandler = operations.GetGophersHandlerFunc(GetGophers)
@@ -55,18 +53,13 @@ func Health(operations.CheckHealthParams) middleware.Responder {
 }
 
 //GetHelloUser returns Hello + your name
-func GetHelloUser(user operations.GetHelloUserParams) middleware.Responder {
-	return operations.NewGetHelloUserOK().WithPayload("Hello " + user.User + "!")
-}
-
-//GetHelloUser returns Hello + your name
 func GetGopherName(gopher operations.GetGopherNameParams) middleware.Responder {
 
 	var URL string
 	if gopher.Name != "" {
 		URL = "https://github.com/scraly/gophers/raw/main/" + gopher.Name + ".png"
 	} else {
-		//by default we return dr who gopher
+		//by default we return Gandalf gopher
 		URL = "https://github.com/scraly/gophers/raw/main/gandalf.png"
 	}
 
@@ -91,7 +84,7 @@ func GetGophers(operations.GetGophersParams) middleware.Responder {
 	var arr []*models.Gopher
 
 	for _, c := range directoryContent {
-		if *c.Name == ".gitignore" || *c.Name == "README.md" {
+		if *c.Name == ".gitignore" || *c.Name == "*.md" {
 			continue
 		}
 

@@ -33,11 +33,14 @@ $ task run
 ```
 
 ### Serve Swagger UI 
-this will open you browser on Swagger UI
+
+This will open you browser on Swagger UI
 ``` 
 $ task swagger:serve
 ```
 ### View API up & running
+
+Get list of available Gophers:
 
 ```
 $ curl http://localhost:8080/gophers
@@ -62,13 +65,19 @@ $ curl http://localhost:8080/gophers
     "url": "https://raw.githubusercontent.com/scraly/gophers/main/back-to-the-future-v2.png"
   }
 ]
-
-$ curl http://localhost:8080/gopher/back-to-the-future-v2
-
-// Enjoy to see a so cute Gopher ! 
 ```
+
+Get Gopher by name:
+
+```
+$ curl -O localhost:8080/gopher/back-to-the-future-v2
+
+$ file back-to-the-future-v2
+back-to-the-future-v2: PNG image data, 552 x 616, 8-bit/color RGBA, non-interlaced
+```
+
+Enjoy to see a so cute Gopher!
 
 ## Notes
 
 This API use [go-swagger](https://goswagger.io/install.html)
-
