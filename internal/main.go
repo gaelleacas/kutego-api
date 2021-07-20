@@ -24,7 +24,7 @@ func main() {
 	}
 
 	api := operations.NewKutegoAPIAPI(swaggerSpec)
-	// Use swaggerUI instead of reDoc
+	// Use swaggerUI instead of reDoc on /docs
 	api.UseSwaggerUI()
 	server := restapi.NewServer(api)
 	defer func() {
