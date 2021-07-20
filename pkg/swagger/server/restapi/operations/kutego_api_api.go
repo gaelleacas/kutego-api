@@ -20,9 +20,9 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// NewHelloAPIAPI creates a new HelloAPI instance
-func NewHelloAPIAPI(spec *loads.Document) *HelloAPIAPI {
-	return &HelloAPIAPI{
+// NewKutegoAPIAPI creates a new KutegoAPI instance
+func NewKutegoAPIAPI(spec *loads.Document) *KutegoAPIAPI {
+	return &KutegoAPIAPI{
 		handlers:            make(map[string]map[string]http.Handler),
 		formats:             strfmt.Default,
 		defaultConsumes:     "application/json",
@@ -50,17 +50,14 @@ func NewHelloAPIAPI(spec *loads.Document) *HelloAPIAPI {
 		GetGophersHandler: GetGophersHandlerFunc(func(params GetGophersParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetGophers has not yet been implemented")
 		}),
-		GetHelloUserHandler: GetHelloUserHandlerFunc(func(params GetHelloUserParams) middleware.Responder {
-			return middleware.NotImplemented("operation GetHelloUser has not yet been implemented")
-		}),
 		CheckHealthHandler: CheckHealthHandlerFunc(func(params CheckHealthParams) middleware.Responder {
 			return middleware.NotImplemented("operation CheckHealth has not yet been implemented")
 		}),
 	}
 }
 
-/*HelloAPIAPI HTTP server in Go with Swagger endpoints definition */
-type HelloAPIAPI struct {
+/*KutegoAPIAPI HTTP server in Go with Swagger endpoints definition */
+type KutegoAPIAPI struct {
 	spec            *loads.Document
 	context         *middleware.Context
 	handlers        map[string]map[string]http.Handler
@@ -102,8 +99,6 @@ type HelloAPIAPI struct {
 	GetGopherNameHandler GetGopherNameHandler
 	// GetGophersHandler sets the operation handler for the get gophers operation
 	GetGophersHandler GetGophersHandler
-	// GetHelloUserHandler sets the operation handler for the get hello user operation
-	GetHelloUserHandler GetHelloUserHandler
 	// CheckHealthHandler sets the operation handler for the check health operation
 	CheckHealthHandler CheckHealthHandler
 
@@ -127,52 +122,52 @@ type HelloAPIAPI struct {
 }
 
 // UseRedoc for documentation at /docs
-func (o *HelloAPIAPI) UseRedoc() {
+func (o *KutegoAPIAPI) UseRedoc() {
 	o.useSwaggerUI = false
 }
 
 // UseSwaggerUI for documentation at /docs
-func (o *HelloAPIAPI) UseSwaggerUI() {
+func (o *KutegoAPIAPI) UseSwaggerUI() {
 	o.useSwaggerUI = true
 }
 
 // SetDefaultProduces sets the default produces media type
-func (o *HelloAPIAPI) SetDefaultProduces(mediaType string) {
+func (o *KutegoAPIAPI) SetDefaultProduces(mediaType string) {
 	o.defaultProduces = mediaType
 }
 
 // SetDefaultConsumes returns the default consumes media type
-func (o *HelloAPIAPI) SetDefaultConsumes(mediaType string) {
+func (o *KutegoAPIAPI) SetDefaultConsumes(mediaType string) {
 	o.defaultConsumes = mediaType
 }
 
 // SetSpec sets a spec that will be served for the clients.
-func (o *HelloAPIAPI) SetSpec(spec *loads.Document) {
+func (o *KutegoAPIAPI) SetSpec(spec *loads.Document) {
 	o.spec = spec
 }
 
 // DefaultProduces returns the default produces media type
-func (o *HelloAPIAPI) DefaultProduces() string {
+func (o *KutegoAPIAPI) DefaultProduces() string {
 	return o.defaultProduces
 }
 
 // DefaultConsumes returns the default consumes media type
-func (o *HelloAPIAPI) DefaultConsumes() string {
+func (o *KutegoAPIAPI) DefaultConsumes() string {
 	return o.defaultConsumes
 }
 
 // Formats returns the registered string formats
-func (o *HelloAPIAPI) Formats() strfmt.Registry {
+func (o *KutegoAPIAPI) Formats() strfmt.Registry {
 	return o.formats
 }
 
 // RegisterFormat registers a custom format validator
-func (o *HelloAPIAPI) RegisterFormat(name string, format strfmt.Format, validator strfmt.Validator) {
+func (o *KutegoAPIAPI) RegisterFormat(name string, format strfmt.Format, validator strfmt.Validator) {
 	o.formats.Add(name, format, validator)
 }
 
-// Validate validates the registrations in the HelloAPIAPI
-func (o *HelloAPIAPI) Validate() error {
+// Validate validates the registrations in the KutegoAPIAPI
+func (o *KutegoAPIAPI) Validate() error {
 	var unregistered []string
 
 	if o.JSONConsumer == nil {
@@ -195,9 +190,6 @@ func (o *HelloAPIAPI) Validate() error {
 	if o.GetGophersHandler == nil {
 		unregistered = append(unregistered, "GetGophersHandler")
 	}
-	if o.GetHelloUserHandler == nil {
-		unregistered = append(unregistered, "GetHelloUserHandler")
-	}
 	if o.CheckHealthHandler == nil {
 		unregistered = append(unregistered, "CheckHealthHandler")
 	}
@@ -210,23 +202,23 @@ func (o *HelloAPIAPI) Validate() error {
 }
 
 // ServeErrorFor gets a error handler for a given operation id
-func (o *HelloAPIAPI) ServeErrorFor(operationID string) func(http.ResponseWriter, *http.Request, error) {
+func (o *KutegoAPIAPI) ServeErrorFor(operationID string) func(http.ResponseWriter, *http.Request, error) {
 	return o.ServeError
 }
 
 // AuthenticatorsFor gets the authenticators for the specified security schemes
-func (o *HelloAPIAPI) AuthenticatorsFor(schemes map[string]spec.SecurityScheme) map[string]runtime.Authenticator {
+func (o *KutegoAPIAPI) AuthenticatorsFor(schemes map[string]spec.SecurityScheme) map[string]runtime.Authenticator {
 	return nil
 }
 
 // Authorizer returns the registered authorizer
-func (o *HelloAPIAPI) Authorizer() runtime.Authorizer {
+func (o *KutegoAPIAPI) Authorizer() runtime.Authorizer {
 	return nil
 }
 
 // ConsumersFor gets the consumers for the specified media types.
 // MIME type parameters are ignored here.
-func (o *HelloAPIAPI) ConsumersFor(mediaTypes []string) map[string]runtime.Consumer {
+func (o *KutegoAPIAPI) ConsumersFor(mediaTypes []string) map[string]runtime.Consumer {
 	result := make(map[string]runtime.Consumer, len(mediaTypes))
 	for _, mt := range mediaTypes {
 		switch mt {
@@ -243,7 +235,7 @@ func (o *HelloAPIAPI) ConsumersFor(mediaTypes []string) map[string]runtime.Consu
 
 // ProducersFor gets the producers for the specified media types.
 // MIME type parameters are ignored here.
-func (o *HelloAPIAPI) ProducersFor(mediaTypes []string) map[string]runtime.Producer {
+func (o *KutegoAPIAPI) ProducersFor(mediaTypes []string) map[string]runtime.Producer {
 	result := make(map[string]runtime.Producer, len(mediaTypes))
 	for _, mt := range mediaTypes {
 		switch mt {
@@ -263,7 +255,7 @@ func (o *HelloAPIAPI) ProducersFor(mediaTypes []string) map[string]runtime.Produ
 }
 
 // HandlerFor gets a http.Handler for the provided operation method and path
-func (o *HelloAPIAPI) HandlerFor(method, path string) (http.Handler, bool) {
+func (o *KutegoAPIAPI) HandlerFor(method, path string) (http.Handler, bool) {
 	if o.handlers == nil {
 		return nil, false
 	}
@@ -278,8 +270,8 @@ func (o *HelloAPIAPI) HandlerFor(method, path string) (http.Handler, bool) {
 	return h, ok
 }
 
-// Context returns the middleware context for the hello API API
-func (o *HelloAPIAPI) Context() *middleware.Context {
+// Context returns the middleware context for the kutego API API
+func (o *KutegoAPIAPI) Context() *middleware.Context {
 	if o.context == nil {
 		o.context = middleware.NewRoutableContext(o.spec, o, nil)
 	}
@@ -287,7 +279,7 @@ func (o *HelloAPIAPI) Context() *middleware.Context {
 	return o.context
 }
 
-func (o *HelloAPIAPI) initHandlerCache() {
+func (o *KutegoAPIAPI) initHandlerCache() {
 	o.Context() // don't care about the result, just that the initialization happened
 	if o.handlers == nil {
 		o.handlers = make(map[string]map[string]http.Handler)
@@ -304,16 +296,12 @@ func (o *HelloAPIAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/hello/{user}"] = NewGetHelloUser(o.context, o.GetHelloUserHandler)
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
 	o.handlers["GET"]["/healthz"] = NewCheckHealth(o.context, o.CheckHealthHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP
 // can be used directly in http.ListenAndServe(":8000", api.Serve(nil))
-func (o *HelloAPIAPI) Serve(builder middleware.Builder) http.Handler {
+func (o *KutegoAPIAPI) Serve(builder middleware.Builder) http.Handler {
 	o.Init()
 
 	if o.Middleware != nil {
@@ -326,24 +314,24 @@ func (o *HelloAPIAPI) Serve(builder middleware.Builder) http.Handler {
 }
 
 // Init allows you to just initialize the handler cache, you can then recompose the middleware as you see fit
-func (o *HelloAPIAPI) Init() {
+func (o *KutegoAPIAPI) Init() {
 	if len(o.handlers) == 0 {
 		o.initHandlerCache()
 	}
 }
 
 // RegisterConsumer allows you to add (or override) a consumer for a media type.
-func (o *HelloAPIAPI) RegisterConsumer(mediaType string, consumer runtime.Consumer) {
+func (o *KutegoAPIAPI) RegisterConsumer(mediaType string, consumer runtime.Consumer) {
 	o.customConsumers[mediaType] = consumer
 }
 
 // RegisterProducer allows you to add (or override) a producer for a media type.
-func (o *HelloAPIAPI) RegisterProducer(mediaType string, producer runtime.Producer) {
+func (o *KutegoAPIAPI) RegisterProducer(mediaType string, producer runtime.Producer) {
 	o.customProducers[mediaType] = producer
 }
 
 // AddMiddlewareFor adds a http middleware to existing handler
-func (o *HelloAPIAPI) AddMiddlewareFor(method, path string, builder middleware.Builder) {
+func (o *KutegoAPIAPI) AddMiddlewareFor(method, path string, builder middleware.Builder) {
 	um := strings.ToUpper(method)
 	if path == "/" {
 		path = ""

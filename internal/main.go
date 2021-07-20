@@ -23,7 +23,9 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	api := operations.NewHelloAPIAPI(swaggerSpec)
+	api := operations.NewKutegoAPIAPI(swaggerSpec)
+	// Use swaggerUI instead of reDoc
+	api.UseSwaggerUI()
 	server := restapi.NewServer(api)
 	defer func() {
 		if err := server.Shutdown(); err != nil {
@@ -52,7 +54,7 @@ func Health(operations.CheckHealthParams) middleware.Responder {
 	return operations.NewCheckHealthOK().WithPayload("OK")
 }
 
-//GetHelloUser returns Hello + your name
+//GetGopherName returns Gopher image (png)
 func GetGopherName(gopher operations.GetGopherNameParams) middleware.Responder {
 
 	var URL string
@@ -84,7 +86,7 @@ func GetGophers(operations.GetGophersParams) middleware.Responder {
 	var arr []*models.Gopher
 
 	for _, c := range directoryContent {
-		if *c.Name == ".gitignore" || *c.Name == "*.md" {
+		if *c.Name == ".gitignore" || *c.Name == "README.md" {
 			continue
 		}
 
@@ -92,9 +94,6 @@ func GetGophers(operations.GetGophersParams) middleware.Responder {
 
 		arr = append(arr, &models.Gopher{name, *c.Path, *c.DownloadURL})
 
-		fmt.Println(c)
-
-		//fmt.Println(arr)
 	}
 
 	return operations.NewGetGophersOK().WithPayload(arr)

@@ -22,9 +22,11 @@ type Gopher struct {
 	Name string `json:"name,omitempty"`
 
 	// path
+	// Example: my-gopher.png
 	Path string `json:"path,omitempty"`
 
 	// url
+	// Example: https://raw.githubusercontent.com/scraly/gophers/main/arrow-gopher.png
 	URL string `json:"url,omitempty"`
 }
 

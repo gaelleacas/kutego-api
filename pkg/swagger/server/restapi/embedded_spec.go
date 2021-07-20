@@ -30,7 +30,7 @@ func init() {
   "swagger": "2.0",
   "info": {
     "description": "HTTP server in Go with Swagger endpoints definition",
-    "title": "http-go-server",
+    "title": "kutego-api",
     "version": "0.1.0"
   },
   "paths": {
@@ -99,31 +99,6 @@ func init() {
           }
         }
       }
-    },
-    "/hello/{user}": {
-      "get": {
-        "description": "Returns a greeting to the user!",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "The name of the user to greet.",
-            "name": "user",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns the greeting.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "400": {
-            "description": "Invalid characters in \"user\" were provided."
-          }
-        }
-      }
     }
   },
   "definitions": {
@@ -135,10 +110,12 @@ func init() {
           "example": "my-gopher"
         },
         "path": {
-          "type": "string"
+          "type": "string",
+          "example": "my-gopher.png"
         },
         "url": {
-          "type": "string"
+          "type": "string",
+          "example": "https://raw.githubusercontent.com/scraly/gophers/main/arrow-gopher.png"
         }
       }
     }
@@ -157,7 +134,7 @@ func init() {
   "swagger": "2.0",
   "info": {
     "description": "HTTP server in Go with Swagger endpoints definition",
-    "title": "http-go-server",
+    "title": "kutego-api",
     "version": "0.1.0"
   },
   "paths": {
@@ -226,31 +203,6 @@ func init() {
           }
         }
       }
-    },
-    "/hello/{user}": {
-      "get": {
-        "description": "Returns a greeting to the user!",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "The name of the user to greet.",
-            "name": "user",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns the greeting.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          "400": {
-            "description": "Invalid characters in \"user\" were provided."
-          }
-        }
-      }
     }
   },
   "definitions": {
@@ -262,10 +214,12 @@ func init() {
           "example": "my-gopher"
         },
         "path": {
-          "type": "string"
+          "type": "string",
+          "example": "my-gopher.png"
         },
         "url": {
-          "type": "string"
+          "type": "string",
+          "example": "https://raw.githubusercontent.com/scraly/gophers/main/arrow-gopher.png"
         }
       }
     }

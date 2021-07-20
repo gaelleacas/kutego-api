@@ -13,13 +13,13 @@ import (
 	"github.com/gaelleacas/kutego-api/pkg/swagger/server/restapi/operations"
 )
 
-//go:generate swagger generate server --target ../../server --name HelloAPI --spec ../../swagger.yml --principal interface{} --exclude-main
+//go:generate swagger generate server --target ../../server --name KutegoAPI --spec ../../swagger.yml --principal interface{} --exclude-main
 
-func configureFlags(api *operations.HelloAPIAPI) {
+func configureFlags(api *operations.KutegoAPIAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
 }
 
-func configureAPI(api *operations.HelloAPIAPI) http.Handler {
+func configureAPI(api *operations.KutegoAPIAPI) http.Handler {
 	// configure the api here
 	api.ServeError = errors.ServeError
 
@@ -47,11 +47,6 @@ func configureAPI(api *operations.HelloAPIAPI) http.Handler {
 	if api.GetGophersHandler == nil {
 		api.GetGophersHandler = operations.GetGophersHandlerFunc(func(params operations.GetGophersParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.GetGophers has not yet been implemented")
-		})
-	}
-	if api.GetHelloUserHandler == nil {
-		api.GetHelloUserHandler = operations.GetHelloUserHandlerFunc(func(params operations.GetHelloUserParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.GetHelloUser has not yet been implemented")
 		})
 	}
 	if api.CheckHealthHandler == nil {
