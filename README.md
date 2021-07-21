@@ -84,4 +84,4 @@ This API use [go-swagger](https://goswagger.io/install.html)
 
 ## Thanks 
 
-Special thanks to @scraly who wrote an awesome article about [How to write an API by exemple](https://dev.to/aurelievache/learning-go-by-examples-part-2-create-an-http-rest-api-server-in-go-1cdm)
+Special thanks to [Scraly](https://github.com/scraly) who wrote an awesome article about [How to write an API by exemple](https://dev.to/aurelievache/learning-go-by-examples-part-2-create-an-http-rest-api-server-in-go-1cdm)
