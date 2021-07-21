@@ -24,9 +24,6 @@ func init() {
   "produces": [
     "application/json"
   ],
-  "schemes": [
-    "http"
-  ],
   "swagger": "2.0",
   "info": {
     "description": "HTTP server in Go with Swagger endpoints definition",
@@ -127,9 +124,6 @@ func init() {
   ],
   "produces": [
     "application/json"
-  ],
-  "schemes": [
-    "http"
   ],
   "swagger": "2.0",
   "info": {

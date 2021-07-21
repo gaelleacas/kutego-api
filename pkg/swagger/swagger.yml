@@ -6,8 +6,9 @@ info:
   version: 0.1.0
 produces:
 - application/json
-schemes:
-- http
+# schemes:
+# - http
+
 swagger: "2.0"
 
 paths:
