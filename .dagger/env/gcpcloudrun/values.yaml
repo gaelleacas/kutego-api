@@ -1,0 +1,39 @@
+plan:
+    package: ./gcpcloudrun
+name: gcpcloudrun
+inputs:
+    deploy.name:
+        text: kutego-api
+    deploy.port:
+        text: "8080"
+    gcpConfig.project:
+        text: khaly-221308
+    gcpConfig.region:
+        text: europe-west1
+    gcpConfig.serviceKey:
+        secret: ENC[AES256_GCM,data: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,iv:b+bEXYtQmL3ErYws1SfFBI+BBbiH0bbSBozoAkirxTc=,tag:ZqsIbpiiSoCk9xYTZTC1tQ==,type:str]
+    imageRef:
+        text: eu.gcr.io/khaly-221308/kutego-api
+    src:
+        dir:
+            path: .
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1gk7gxzgqgmee88qszqskhegc2r4kne5rjnc42x70cd7mhnz20f8qnka44w
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB2NVd4dTl6dmV0VUZ1c29i
+            OU5GYlRwVTB5OVFNRmUyaVBjWVRJaDN5OENrClBTRkZiSWgwVVFOSE8xK0UrOUpF
+            eGxPbzRwMW5Ramk2MXlHMkNqdVJzRDQKLS0tIFNGV0x0WnFTV2hmSmhsdTJ3dnBU
+            U0RHSENoU1lnNjlxenhZN2owVTJmYU0Kj7/7+mJAKx00q0ZfDS3/Fty9wc1YMqzJ
+            ICcNfY4rPT9RQ/okw/Q3TGvOewvPj8fHmsxt9ZUQwDyWcs5gYxORfg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2021-07-25T20:41:24Z"
+    mac: ENC[AES256_GCM,data:PJuTnHfXNdyDn5n8b2Rz0qafKJfnKn+HmpJx/v3jB8bd2QGwi6tgjdJA+KcRKADRLKrpsEBd6ZDzQA2Wrq/YF7KD9De8+xoWCDcuiv+mSEmtCA7LALtBcsmcGxT44QOEz87MrzTmsigjBKVUB8QiA+jf9naW+HqHIfLZPF5jecc=,iv:hpd4A+0F/0JeTjgtHwGRc5hgob8fskqAbuuaix2BV38=,tag:ERNC48cnTq+vb2p7bGJW6g==,type:str]
+    pgp: []
+    encrypted_suffix: secret
+    version: 3.7.1
