@@ -1,6 +1,6 @@
 # kutego-api
 
-KuteGo is an API to play with cute [Aurélie Vache's Gophers](https://github.com/scraly/gophers)
+KuteGo is an API to play with cute [Aurelie Vache's Gophers](https://github.com/scraly/gophers)
 
 For now the API provide the Gophers list and a route to diplay one Gopher of your choice 😍
 
