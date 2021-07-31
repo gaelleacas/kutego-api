@@ -12,10 +12,28 @@
   run: curl "${{ steps.deploy.outputs.url }}"
 
 
-# on:
-#   push:
-#     branches:
-#       - main
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@main
+        with:
+          service: kutego-api 
+          image: eu.gcr.io/${{ secrets.PROJECT }}/kutego-api:0.1.2
+          credentials: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Use Output
+        run: curl "${{ steps.deploy.outputs.url }}"
+
 
 # jobs:
 #   deploy:
