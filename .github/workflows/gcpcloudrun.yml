@@ -1,16 +1,4 @@
-# name: CloudRun
-
-- name: Deploy to Cloud Run
-  id: deploy
-  uses: google-github-actions/deploy-cloudrun@main
-  with:
-    service: kutego-api 
-    image: eu.gcr.io/${{ secrets.PROJECT }}/kutego-api:0.1.2
-    credentials: ${{ secrets.GCP_SA_KEY }}
-
-- name: Use Output
-  run: curl "${{ steps.deploy.outputs.url }}"
-
+name: CloudRun
 
 on:
   push:
