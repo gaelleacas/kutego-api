@@ -28,7 +28,7 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@main
         with:
           service: ${{ env.SERVICE }}
-          image: eu.gcr.io/${{ secrets.PROJECT }}/kutego-api:0.1.2
+          image: eu.gcr.io/${{ secrets.PROJECT }}/kutego-api:${{  github.sha }}
           credentials: ${{ secrets.GCP_SA_KEY }}
           region: ${{ env.REGION }}
 
