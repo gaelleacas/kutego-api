@@ -1,10 +1,5 @@
 name: CloudRun
 
-on:
-  push:
-    branches:
-      - main
-
 env:
   REGION: europe-west1
   SERVICE: kutego-api
@@ -27,7 +22,10 @@ jobs:
       - name: Use Output
         run: curl "${{ steps.deploy.outputs.url }}"
 
-
+on:
+  push:
+    branches:
+      - main
 
 # jobs:
 #   deploy:
