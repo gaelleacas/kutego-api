@@ -20,7 +20,7 @@ jobs:
           region: ${{ env.REGION }}
 
       - name: Use Output
-        run: curl "${{ steps.deploy.outputs.url }}/ghopers"
+        run: curl "${{ steps.deploy.outputs.url }}/gophers"
 
 on:
   push:
