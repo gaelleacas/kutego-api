@@ -70,7 +70,7 @@ paths:
           in: query
           type: string
           required: false
-          description: Size for your Gopher
+          description: Size for your Gopher ('x-small','small','medium')
       responses:
         200:
           description: Returns a random gopher.
