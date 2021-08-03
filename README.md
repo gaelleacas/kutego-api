@@ -80,7 +80,7 @@ $ file back-to-the-future-v2
 back-to-the-future-v2: PNG image data, 552 x 616, 8-bit/color RGBA, non-interlaced
 ```
 
-Enjoy to see a so cute Gopher!
+Enjoy to see a so cute Gopher! 
 
 ## Notes
 
