@@ -81,7 +81,7 @@ func GetGopherName(gopher operations.GetGopherNameParams) middleware.Responder {
 	if err != nil {
 		log.Fatalf("failed to open image: %v", err)
 	}
-	fmt.Println(response.StatusCode)
+
 	if response.StatusCode != 200 {
 		URL = "https://github.com/scraly/gophers/raw/main/fire-gopher.png"
 		response, err = http.Get(URL)
