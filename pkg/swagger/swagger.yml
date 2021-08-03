@@ -36,6 +36,11 @@ paths:
           type: string
           required: true
           description: The name of the Gopher to display.
+        - name: size
+          in: query
+          type: string
+          required: false
+          description: Size for your Gopher
       responses:
         200:
           description: Returns the gopher.
@@ -60,6 +65,12 @@ paths:
       description: Return a random Gopher Image
       produces:
       - image/png
+      parameters:
+        - name: size
+          in: query
+          type: string
+          required: false
+          description: Size for your Gopher
       responses:
         200:
           description: Returns a random gopher.

@@ -13,7 +13,11 @@ import (
 
 // GetGopherRandomURL generates an URL for the get gopher random operation
 type GetGopherRandomURL struct {
+	Size *string
+
 	_basePath string
+	// avoid unkeyed usage
+	_ struct{}
 }
 
 // WithBasePath sets the base path for this url builder, only required when it's different from the
@@ -39,6 +43,18 @@ func (o *GetGopherRandomURL) Build() (*url.URL, error) {
 
 	_basePath := o._basePath
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
+
+	qs := make(url.Values)
+
+	var sizeQ string
+	if o.Size != nil {
+		sizeQ = *o.Size
+	}
+	if sizeQ != "" {
+		qs.Set("size", sizeQ)
+	}
+
+	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }

@@ -37,6 +37,14 @@ func init() {
         "produces": [
           "image/png"
         ],
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Size for your Gopher",
+            "name": "size",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Returns a random gopher.",
@@ -63,6 +71,12 @@ func init() {
             "name": "name",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "description": "Size for your Gopher",
+            "name": "size",
+            "in": "query"
           }
         ],
         "responses": {
@@ -157,6 +171,14 @@ func init() {
         "produces": [
           "image/png"
         ],
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Size for your Gopher",
+            "name": "size",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Returns a random gopher.",
@@ -183,6 +205,12 @@ func init() {
             "name": "name",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "description": "Size for your Gopher",
+            "name": "size",
+            "in": "query"
           }
         ],
         "responses": {
