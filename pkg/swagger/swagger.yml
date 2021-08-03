@@ -55,6 +55,18 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Gopher'
+  /gopher/random:
+    get:
+      description: Return a random Gopher Image
+      produces:
+      - image/png
+      responses:
+        200:
+          description: Returns a random gopher.
+          schema:
+            type: file
+        400:
+          description: there is something wrong in the path.
 definitions:
   Gopher:
     type: object

@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/gaelleacas/kutego-api/pkg/swagger/server/models"
 	"github.com/gaelleacas/kutego-api/pkg/swagger/server/restapi"
@@ -44,6 +46,8 @@ func main() {
 
 	api.GetGophersHandler = operations.GetGophersHandlerFunc(GetGophers)
 
+	api.GetGopherRandomHandler = operations.GetGopherRandomHandlerFunc(GetGopherRandom)
+
 	// Start server which listening
 	if err := server.Serve(); err != nil {
 		log.Fatalln(err)
@@ -77,6 +81,39 @@ func GetGopherName(gopher operations.GetGopherNameParams) middleware.Responder {
 
 func GetGophers(operations.GetGophersParams) middleware.Responder {
 
+	arr := GetGophersList()
+
+	return operations.NewGetGophersOK().WithPayload(arr)
+}
+
+func GetGopherRandom(operations.GetGopherRandomParams) middleware.Responder {
+	var URL string
+
+	URL = "https://github.com/scraly/gophers/raw/main/back-to-the-future-v2.png"
+
+	// Get Gophers List
+	arr := GetGophersList()
+
+	// Get a Random Index
+	rand.Seed(time.Now().UnixNano())
+	var index int
+	index = rand.Intn(len(arr) - 1)
+
+	URL = "https://github.com/scraly/gophers/raw/main/" + arr[index].Name + ".png"
+
+	response, err := http.Get(URL)
+	if err != nil {
+		fmt.Println("error")
+	}
+
+	return operations.NewGetGopherNameOK().WithPayload(response.Body)
+}
+
+/**
+Get Gophers List from Scraly repository
+*/
+func GetGophersList() []*models.Gopher {
+
 	client := github.NewClient(nil)
 	// list public repositories for org "github"
 	ctx := context.Background()
@@ -85,6 +122,7 @@ func GetGophers(operations.GetGophersParams) middleware.Responder {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	var arr []*models.Gopher
 
 	for _, c := range directoryContent {
@@ -98,5 +136,5 @@ func GetGophers(operations.GetGophersParams) middleware.Responder {
 
 	}
 
-	return operations.NewGetGophersOK().WithPayload(arr)
+	return arr
 }
