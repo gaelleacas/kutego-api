@@ -32,8 +32,8 @@ jobs:
           credentials: ${{ secrets.GCP_SA_KEY }}
           region: ${{ env.REGION }}
 
-      - name: Use Output
-        run: curl "${{ steps.deploy.outputs.url }}/gophers"
+      # - name: Use Output
+      #   run: curl "${{ steps.deploy.outputs.url }}/gophers"
 
 on:
   push:
