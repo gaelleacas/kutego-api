@@ -9,6 +9,7 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 )
@@ -35,6 +36,10 @@ type GetGopherNameParams struct {
 	  In: path
 	*/
 	Name string
+	/*Size for your Gopher
+	  In: query
+	*/
+	Size *string
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -46,8 +51,15 @@ func (o *GetGopherNameParams) BindRequest(r *http.Request, route *middleware.Mat
 
 	o.HTTPRequest = r
 
+	qs := runtime.Values(r.URL.Query())
+
 	rName, rhkName, _ := route.Params.GetOK("name")
 	if err := o.bindName(rName, rhkName, route.Formats); err != nil {
+		res = append(res, err)
+	}
+
+	qSize, qhkSize, _ := qs.GetOK("size")
+	if err := o.bindSize(qSize, qhkSize, route.Formats); err != nil {
 		res = append(res, err)
 	}
 	if len(res) > 0 {
@@ -66,6 +78,24 @@ func (o *GetGopherNameParams) bindName(rawData []string, hasKey bool, formats st
 	// Required: true
 	// Parameter is provided by construction from the route
 	o.Name = raw
+
+	return nil
+}
+
+// bindSize binds and validates parameter Size from query.
+func (o *GetGopherNameParams) bindSize(rawData []string, hasKey bool, formats strfmt.Registry) error {
+	var raw string
+	if len(rawData) > 0 {
+		raw = rawData[len(rawData)-1]
+	}
+
+	// Required: false
+	// AllowEmptyValue: false
+
+	if raw == "" { // empty values pass all other validations
+		return nil
+	}
+	o.Size = &raw
 
 	return nil
 }

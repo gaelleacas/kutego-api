@@ -1,14 +1,20 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"fmt"
+	"image"
+	"image/png"
+	"io"
+	"io/ioutil"
 	"log"
 	"math/rand"
 	"net/http"
 	"strings"
 	"time"
 
+	"github.com/disintegration/imaging"
 	"github.com/gaelleacas/kutego-api/pkg/swagger/server/models"
 	"github.com/gaelleacas/kutego-api/pkg/swagger/server/restapi"
 	"github.com/gaelleacas/kutego-api/pkg/swagger/server/restapi/operations"
@@ -72,11 +78,18 @@ func GetGopherName(gopher operations.GetGopherNameParams) middleware.Responder {
 	}
 
 	response, err := http.Get(URL)
+
 	if err != nil {
-		fmt.Println("error")
+		log.Fatalf("failed to open image: %v", err)
 	}
 
-	return operations.NewGetGopherNameOK().WithPayload(response.Body)
+	outputImg := response.Body
+
+	if gopher.Size != nil {
+		outputImg = resizeImage(*response, *gopher.Size)
+	}
+
+	return operations.NewGetGopherNameOK().WithPayload(outputImg)
 }
 
 func GetGophers(operations.GetGophersParams) middleware.Responder {
@@ -86,10 +99,8 @@ func GetGophers(operations.GetGophersParams) middleware.Responder {
 	return operations.NewGetGophersOK().WithPayload(arr)
 }
 
-func GetGopherRandom(operations.GetGopherRandomParams) middleware.Responder {
+func GetGopherRandom(gopher operations.GetGopherRandomParams) middleware.Responder {
 	var URL string
-
-	URL = "https://github.com/scraly/gophers/raw/main/back-to-the-future-v2.png"
 
 	// Get Gophers List
 	arr := GetGophersList()
@@ -106,7 +117,12 @@ func GetGopherRandom(operations.GetGopherRandomParams) middleware.Responder {
 		fmt.Println("error")
 	}
 
-	return operations.NewGetGopherNameOK().WithPayload(response.Body)
+	outputImg := response.Body
+	if gopher.Size != nil {
+		outputImg = resizeImage(*response, *gopher.Size)
+	}
+
+	return operations.NewGetGopherNameOK().WithPayload(outputImg)
 }
 
 /**
@@ -137,4 +153,35 @@ func GetGophersList() []*models.Gopher {
 	}
 
 	return arr
+}
+
+func resizeImage(response http.Response, size string) io.ReadCloser {
+	srcImage, _, err := image.Decode(response.Body)
+
+	if err != nil {
+		log.Fatalf("failed to Decode image: %v", err)
+	}
+
+	var height int
+	switch size {
+	case "x-small":
+		height = 50
+	case "small":
+		height = 100
+	case "medium":
+		height = 300
+	default:
+		// Mouhouhahaha!
+		height = 1000
+	}
+
+	// Resize the cropped image to width = 200px preserving the aspect ratio.
+	srcImage = imaging.Resize(srcImage, 0, height, imaging.Lanczos)
+
+	//fmt.Println(src)
+	encoded := &bytes.Buffer{}
+	err = png.Encode(encoded, srcImage)
+
+	return ioutil.NopCloser(encoded)
+
 }

@@ -16,6 +16,8 @@ import (
 type GetGopherNameURL struct {
 	Name string
 
+	Size *string
+
 	_basePath string
 	// avoid unkeyed usage
 	_ struct{}
@@ -51,6 +53,18 @@ func (o *GetGopherNameURL) Build() (*url.URL, error) {
 
 	_basePath := o._basePath
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
+
+	qs := make(url.Values)
+
+	var sizeQ string
+	if o.Size != nil {
+		sizeQ = *o.Size
+	}
+	if sizeQ != "" {
+		qs.Set("size", sizeQ)
+	}
+
+	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }
