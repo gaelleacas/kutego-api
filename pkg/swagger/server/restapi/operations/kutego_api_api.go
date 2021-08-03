@@ -47,6 +47,9 @@ func NewKutegoAPIAPI(spec *loads.Document) *KutegoAPIAPI {
 		GetGopherNameHandler: GetGopherNameHandlerFunc(func(params GetGopherNameParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetGopherName has not yet been implemented")
 		}),
+		GetGopherRandomHandler: GetGopherRandomHandlerFunc(func(params GetGopherRandomParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetGopherRandom has not yet been implemented")
+		}),
 		GetGophersHandler: GetGophersHandlerFunc(func(params GetGophersParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetGophers has not yet been implemented")
 		}),
@@ -97,6 +100,8 @@ type KutegoAPIAPI struct {
 
 	// GetGopherNameHandler sets the operation handler for the get gopher name operation
 	GetGopherNameHandler GetGopherNameHandler
+	// GetGopherRandomHandler sets the operation handler for the get gopher random operation
+	GetGopherRandomHandler GetGopherRandomHandler
 	// GetGophersHandler sets the operation handler for the get gophers operation
 	GetGophersHandler GetGophersHandler
 	// CheckHealthHandler sets the operation handler for the check health operation
@@ -186,6 +191,9 @@ func (o *KutegoAPIAPI) Validate() error {
 
 	if o.GetGopherNameHandler == nil {
 		unregistered = append(unregistered, "GetGopherNameHandler")
+	}
+	if o.GetGopherRandomHandler == nil {
+		unregistered = append(unregistered, "GetGopherRandomHandler")
 	}
 	if o.GetGophersHandler == nil {
 		unregistered = append(unregistered, "GetGophersHandler")
@@ -289,6 +297,10 @@ func (o *KutegoAPIAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/gopher/{name}"] = NewGetGopherName(o.context, o.GetGopherNameHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/gopher/random"] = NewGetGopherRandom(o.context, o.GetGopherRandomHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

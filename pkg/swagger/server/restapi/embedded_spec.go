@@ -31,6 +31,25 @@ func init() {
     "version": "0.1.0"
   },
   "paths": {
+    "/gopher/random": {
+      "get": {
+        "description": "Return a random Gopher Image",
+        "produces": [
+          "image/png"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a random gopher.",
+            "schema": {
+              "type": "file"
+            }
+          },
+          "400": {
+            "description": "there is something wrong in the path."
+          }
+        }
+      }
+    },
     "/gopher/{name}": {
       "get": {
         "description": "Return the Gopher Image",
@@ -132,6 +151,25 @@ func init() {
     "version": "0.1.0"
   },
   "paths": {
+    "/gopher/random": {
+      "get": {
+        "description": "Return a random Gopher Image",
+        "produces": [
+          "image/png"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a random gopher.",
+            "schema": {
+              "type": "file"
+            }
+          },
+          "400": {
+            "description": "there is something wrong in the path."
+          }
+        }
+      }
+    },
     "/gopher/{name}": {
       "get": {
         "description": "Return the Gopher Image",
