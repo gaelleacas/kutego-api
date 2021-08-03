@@ -2,7 +2,11 @@
 
 KuteGo is an API to play with cute [Aurelie Vache's Gophers](https://github.com/scraly/gophers)
 
-For now the API provide the Gophers list and a route to diplay one Gopher of your choice 😍
+For now, the API provide:
+
+* the Gophers list
+* a route to display one Gopher of your choice 😍
+* and a random Gopher!
 
 ![Gopher McFly](https://raw.githubusercontent.com/scraly/gophers/main/back-to-the-future-v2.png)
 
