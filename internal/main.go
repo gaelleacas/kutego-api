@@ -153,7 +153,9 @@ func GetGopherRandom(gopher operations.GetGopherRandomParams) middleware.Respond
 Display Fire Gopher with a message (error)
 */
 func getFireGopherError(message string) (image.Image, error) {
-	file, err := os.Open("assets/fire-gopher.png")
+
+	// Open local file
+	file, err := os.Open("./assets/fire-gopher.png")
 	if err != nil {
 		log.Fatalf("failed to Open fire-gopher image: %v", err)
 	}
@@ -163,7 +165,10 @@ func getFireGopherError(message string) (image.Image, error) {
 		log.Fatalf("failed to Decode image: %v", err)
 		return srcImage, err
 	}
+	// Add Text on Gopher
 	srcImage, err = TextOnGopher(srcImage, "Ooops, Error! It's on fire!")
+
+	// Resize Image
 	srcImage = resizeImage(srcImage, "medium")
 	if err != nil {
 		log.Fatalf("failed to put Text on Gopher: %v", err)
