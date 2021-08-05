@@ -15,6 +15,9 @@ http://localhost:8080/gopher/random?size=[x-small,small,medium]
 
 ![Gopher McFly](https://raw.githubusercontent.com/scraly/gophers/main/back-to-the-future-v2.png)
 
+## Deploy to Cloud Run
+
+[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
 
 ## How to install 
 
