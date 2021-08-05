@@ -5,16 +5,19 @@ import (
 	"context"
 	"fmt"
 	"image"
+	"image/color"
 	"image/png"
 	"io"
 	"io/ioutil"
 	"log"
 	"math/rand"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
 	"github.com/disintegration/imaging"
+	"github.com/fogleman/gg"
 	"github.com/gaelleacas/kutego-api/pkg/swagger/server/models"
 	"github.com/gaelleacas/kutego-api/pkg/swagger/server/restapi"
 	"github.com/gaelleacas/kutego-api/pkg/swagger/server/restapi/operations"
@@ -81,21 +84,28 @@ func GetGopherName(gopher operations.GetGopherNameParams) middleware.Responder {
 	if err != nil {
 		log.Fatalf("failed to open image: %v", err)
 	}
+	defer response.Body.Close()
 
 	if response.StatusCode != 200 {
-		URL = "https://github.com/scraly/gophers/raw/main/fire-gopher.png"
-		response, err = http.Get(URL)
+		srcImage, _ := getFireGopherError("Ooops, Error")
+		return operations.NewGetGopherNameOK().WithPayload(convertImgToIoCloser(srcImage))
 	}
 
-	outputImg := response.Body
+	srcImage, _, err := image.Decode(response.Body)
+	if err != nil {
+		log.Fatalf("failed to Decode image: %v", err)
+	}
 
 	if gopher.Size != nil {
-		outputImg = resizeImage(*response, *gopher.Size)
+		srcImage = resizeImage(srcImage, *gopher.Size)
 	}
 
-	return operations.NewGetGopherNameOK().WithPayload(outputImg)
+	return operations.NewGetGopherNameOK().WithPayload(convertImgToIoCloser(srcImage))
 }
 
+/**
+Display Gopher list
+*/
 func GetGophers(operations.GetGophersParams) middleware.Responder {
 
 	arr := GetGophersList()
@@ -103,6 +113,9 @@ func GetGophers(operations.GetGophersParams) middleware.Responder {
 	return operations.NewGetGophersOK().WithPayload(arr)
 }
 
+/**
+Display a random Gopher Image
+*/
 func GetGopherRandom(gopher operations.GetGopherRandomParams) middleware.Responder {
 	var URL string
 
@@ -119,14 +132,41 @@ func GetGopherRandom(gopher operations.GetGopherRandomParams) middleware.Respond
 	response, err := http.Get(URL)
 	if err != nil {
 		fmt.Println("error")
+		srcImage, _ := getFireGopherError("Ooops, Error")
+		return operations.NewGetGopherNameOK().WithPayload(convertImgToIoCloser(srcImage))
+	}
+	defer response.Body.Close()
+
+	srcImage, _, err := image.Decode(response.Body)
+	if err != nil {
+		log.Fatalf("failed to Decode image: %v", err)
 	}
 
-	outputImg := response.Body
 	if gopher.Size != nil {
-		outputImg = resizeImage(*response, *gopher.Size)
+		srcImage = resizeImage(srcImage, *gopher.Size)
 	}
 
-	return operations.NewGetGopherNameOK().WithPayload(outputImg)
+	return operations.NewGetGopherNameOK().WithPayload(convertImgToIoCloser(srcImage))
+}
+
+/**
+Display Fire Gopher with a message (error)
+*/
+func getFireGopherError(message string) (image.Image, error) {
+	file, err := os.Open("assets/fire-gopher.png")
+	srcImage, _, err := image.Decode(file)
+	if err != nil {
+		log.Fatalf("failed to Decode image: %v", err)
+		return srcImage, err
+	}
+	srcImage, err = TextOnGopher(srcImage, "Ooops, Error! It's on fire!")
+	srcImage = resizeImage(srcImage, "medium")
+	if err != nil {
+		log.Fatalf("failed to put Text on Gopher: %v", err)
+		return srcImage, err
+	}
+
+	return srcImage, nil
 }
 
 /**
@@ -159,12 +199,10 @@ func GetGophersList() []*models.Gopher {
 	return arr
 }
 
-func resizeImage(response http.Response, size string) io.ReadCloser {
-	srcImage, _, err := image.Decode(response.Body)
-
-	if err != nil {
-		log.Fatalf("failed to Decode image: %v", err)
-	}
+/**
+Resize Image
+*/
+func resizeImage(srcImage image.Image, size string) image.Image {
 
 	var height int
 	switch size {
@@ -182,10 +220,40 @@ func resizeImage(response http.Response, size string) io.ReadCloser {
 	// Resize the cropped image to width = 200px preserving the aspect ratio.
 	srcImage = imaging.Resize(srcImage, 0, height, imaging.Lanczos)
 
-	//fmt.Println(src)
+	return srcImage
+
+}
+
+/**
+Convert Image to io.close (for reply format)
+*/
+func convertImgToIoCloser(srcImage image.Image) io.ReadCloser {
 	encoded := &bytes.Buffer{}
-	err = png.Encode(encoded, srcImage)
+	png.Encode(encoded, srcImage)
 
 	return ioutil.NopCloser(encoded)
+}
 
+/**
+Add text on Image
+*/
+func TextOnGopher(bgImage image.Image, text string) (image.Image, error) {
+
+	imgWidth := bgImage.Bounds().Dx()
+	imgHeight := bgImage.Bounds().Dy()
+
+	dc := gg.NewContext(imgWidth, imgHeight)
+	dc.DrawImage(bgImage, 0, 0)
+
+	if err := dc.LoadFontFace("assets/FiraSans-Light.ttf", 50); err != nil {
+		return nil, err
+	}
+
+	x := float64((imgWidth / 2))
+	y := float64((imgHeight / 12))
+	maxWidth := float64(imgWidth) - 60.0
+	dc.SetColor(color.Black)
+	dc.DrawStringWrapped(text, x, y, 0.5, 0.5, maxWidth, 1.5, gg.AlignRight)
+
+	return dc.Image(), nil
 }
