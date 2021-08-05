@@ -154,6 +154,10 @@ Display Fire Gopher with a message (error)
 */
 func getFireGopherError(message string) (image.Image, error) {
 	file, err := os.Open("assets/fire-gopher.png")
+	if err != nil {
+		log.Fatalf("failed to Open fire-gopher image: %v", err)
+	}
+
 	srcImage, _, err := image.Decode(file)
 	if err != nil {
 		log.Fatalf("failed to Decode image: %v", err)

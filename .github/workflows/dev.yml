@@ -1,4 +1,4 @@
-name: CloudRun
+name: CloudRun-DEV
 
 env:
   REGION: europe-west1
