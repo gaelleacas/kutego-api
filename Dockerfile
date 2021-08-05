@@ -28,7 +28,11 @@ RUN set -x && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -
 
 # Copy the binary to the production image from the builder stage.
 COPY --from=builder /app/bin /app/bin
+COPY --from=builder /app/assets /app/assets
+
+# Create and change to the app directory.
+WORKDIR /app
 
 EXPOSE 8080
 
-CMD [ "/app/bin/kutego-api" ]
+CMD [ "bin/kutego-api" ]
