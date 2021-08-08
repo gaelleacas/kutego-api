@@ -79,11 +79,40 @@ $ curl http://localhost:8080/gophers
   }
 ]
 ```
+Filer by name: 
+```
+$ curl http://localhost:8080/gophers?name=5eme-element
+[
+  {
+    "name": "5eme-element",
+    "path": "5eme-element.png",
+    "url": "https://raw.githubusercontent.com/scraly/gophers/main/5eme-element.png"
+  }
+]
+```
 
 Get Gopher by name:
 
 ```
 $ curl -O localhost:8080/gopher/back-to-the-future-v2
+
+$ file back-to-the-future-v2
+back-to-the-future-v2: PNG image data, 552 x 616, 8-bit/color RGBA, non-interlaced
+```
+
+Get Gopher by name in medium size:  
+(available values : `x-small`, `small`, `medium`)
+```
+$ curl -O localhost:8080/gopher/back-to-the-future-v2?size=medium
+
+$ file back-to-the-future-v2
+back-to-the-future-v2: PNG image data, 552 x 616, 8-bit/color RGBA, non-interlaced
+```
+
+Get a Random gopher:  
+(available values : `x-small`, `small`, `medium`)
+```
+$ curl -O localhost:8080/gopher/random?size=medium
 
 $ file back-to-the-future-v2
 back-to-the-future-v2: PNG image data, 552 x 616, 8-bit/color RGBA, non-interlaced
