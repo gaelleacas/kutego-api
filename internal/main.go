@@ -191,6 +191,7 @@ Get Gophers List from Scraly repository
 func GetGophersList() []*models.Gopher {
 
 	client := github.NewClient(nil)
+
 	// list public repositories for org "github"
 	ctx := context.Background()
 	// list all repositories for the authenticated user
