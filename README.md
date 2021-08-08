@@ -79,7 +79,7 @@ $ curl http://localhost:8080/gophers
   }
 ]
 ```
-Filer by name: 
+Filter by name: 
 ```
 $ curl http://localhost:8080/gophers?name=5eme-element
 [
@@ -106,7 +106,7 @@ Get Gopher by name in medium size:
 $ curl -O localhost:8080/gopher/back-to-the-future-v2?size=medium
 
 $ file back-to-the-future-v2
-back-to-the-future-v2: PNG image data, 552 x 616, 8-bit/color RGBA, non-interlaced
+back-to-the-future-v2: PNG image data, 269 x 300, 8-bit/color RGBA, non-interlaced
 ```
 
 Get a Random gopher:  
@@ -115,7 +115,7 @@ Get a Random gopher:
 $ curl -O localhost:8080/gopher/random?size=medium
 
 $ file back-to-the-future-v2
-back-to-the-future-v2: PNG image data, 552 x 616, 8-bit/color RGBA, non-interlaced
+back-to-the-future-v2: PNG image data, 269 x 300, 8-bit/color RGBA, non-interlaced
 ```
 
 Enjoy to see a so cute Gopher! 
