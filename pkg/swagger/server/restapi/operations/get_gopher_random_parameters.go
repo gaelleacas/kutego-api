@@ -31,7 +31,7 @@ type GetGopherRandomParams struct {
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
 
-	/*Size for your Gopher
+	/*Size for your Gopher ('x-small','small','medium')
 	  In: query
 	*/
 	Size *string

@@ -53,6 +53,12 @@ paths:
       description: List all the gopher
       produces:
        - application/json
+      parameters:
+        - name: name
+          in: query
+          type: string
+          required: false
+          description: Gopher name
       responses:
         200:
           description: Return the Gophers list.
