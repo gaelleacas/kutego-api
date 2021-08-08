@@ -104,13 +104,20 @@ func GetGopherName(gopher operations.GetGopherNameParams) middleware.Responder {
 }
 
 /**
-Display Gopher list
+Display Gopher list with optional filter
 */
-func GetGophers(operations.GetGophersParams) middleware.Responder {
+func GetGophers(gopher operations.GetGophersParams) middleware.Responder {
 
-	arr := GetGophersList()
+	gophersList := GetGophersList()
+	var arr []*models.Gopher
+	for key, value := range gophersList {
+		if value.Name == *gopher.Name {
+			arr = append(arr, gophersList[key])
+			return operations.NewGetGophersOK().WithPayload(arr)
+		}
+	}
 
-	return operations.NewGetGophersOK().WithPayload(arr)
+	return operations.NewGetGophersOK().WithPayload(gophersList)
 }
 
 /**

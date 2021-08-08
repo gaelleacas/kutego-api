@@ -40,7 +40,7 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "description": "Size for your Gopher",
+            "description": "Size for your Gopher ('x-small','small','medium')",
             "name": "size",
             "in": "query"
           }
@@ -97,6 +97,14 @@ func init() {
         "description": "List all the gopher",
         "produces": [
           "application/json"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Gopher name",
+            "name": "name",
+            "in": "query"
+          }
         ],
         "responses": {
           "200": {
@@ -174,7 +182,7 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "description": "Size for your Gopher",
+            "description": "Size for your Gopher ('x-small','small','medium')",
             "name": "size",
             "in": "query"
           }
@@ -231,6 +239,14 @@ func init() {
         "description": "List all the gopher",
         "produces": [
           "application/json"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Gopher name",
+            "name": "name",
+            "in": "query"
+          }
         ],
         "responses": {
           "200": {
