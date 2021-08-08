@@ -109,11 +109,14 @@ Display Gopher list with optional filter
 func GetGophers(gopher operations.GetGophersParams) middleware.Responder {
 
 	gophersList := GetGophersList()
-	var arr []*models.Gopher
-	for key, value := range gophersList {
-		if value.Name == *gopher.Name {
-			arr = append(arr, gophersList[key])
-			return operations.NewGetGophersOK().WithPayload(arr)
+
+	if gopher.Name != nil {
+		var arr []*models.Gopher
+		for key, value := range gophersList {
+			if value.Name == *gopher.Name {
+				arr = append(arr, gophersList[key])
+				return operations.NewGetGophersOK().WithPayload(arr)
+			}
 		}
 	}
 
