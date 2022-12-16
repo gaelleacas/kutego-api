@@ -4,7 +4,6 @@ KuteGo is an API to play with cute [Aurelie Vache's Gophers](https://github.com/
 
 For now, the API provide:
 
-
 * the Gophers list
 * a route to display one Gopher of your choice 😍
 * and a random Gopher!
